@@ -16,6 +16,8 @@ public class ConjurPropertySource extends EnumerablePropertySource {
 	@Override
 	public Object getProperty(String name) {
 		
+		System.out.printf("Resolving %s\n", name);
+		
 		if ("database.uid".equals(name)) {
 			return "my id";
 		}

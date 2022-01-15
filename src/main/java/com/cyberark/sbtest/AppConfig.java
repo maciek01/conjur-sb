@@ -24,7 +24,7 @@ public class AppConfig {
     public class TestBean {
 
 		public void setPassword(String property) {
-			System.out.printf("%s\n", property);
+			System.out.printf("password set to: %s\n", property);
 		}
 
 	}
