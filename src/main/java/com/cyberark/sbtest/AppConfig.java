@@ -17,7 +17,8 @@ import com.cyberark.sbtest.annotations.ConjurPropertySource;
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 
 @Configuration
-@ConjurPropertySource("myorg/myapp")
+@ConjurPropertySource({"myorg1/myapp1", "myorg2/myapp2"})
+@ConjurPropertySource({"myorg3/myapp3", "myorg4/myapp4"})
 public class AppConfig {
 	
     public class TestBean {

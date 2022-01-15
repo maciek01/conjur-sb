@@ -1,6 +1,5 @@
 package com.cyberark.sbtest.annotations;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -9,23 +8,13 @@ import java.lang.annotation.Target;
 
 import org.springframework.context.annotation.Import;
 
-
-
-
-
-
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Documented
 @Repeatable(ConjurPropertySources.class)
 @Import(Registrar.class)
 public @interface ConjurPropertySource {
-
-
+	
 	String name() default "";
-
 	String[] value();
-
 	boolean ignoreResourceNotFound() default false;
-
 }

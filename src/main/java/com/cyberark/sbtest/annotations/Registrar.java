@@ -1,8 +1,6 @@
 package com.cyberark.sbtest.annotations;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -13,6 +11,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
@@ -28,7 +27,10 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 	@Override
 	public void setEnvironment(Environment environment) {
 		this.environment = environment;
-		
+	}
+	
+	public Environment getEnvironment() {
+		return environment;
 	}
 
 	@Override
@@ -36,7 +38,6 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 		
 		ConfigurableEnvironment env = beanFactory.getBean(ConfigurableEnvironment.class);
 		MutablePropertySources propertySources = env.getPropertySources();
-		
 		
 		Collection<com.cyberark.sbtest.core.env.ConjurPropertySource> beans = beanFactory.getBeansOfType(com.cyberark.sbtest.core.env.ConjurPropertySource.class).values();
 		
@@ -48,13 +49,10 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 
 			propertySources.addLast(ps);
 		}
-		
-		
 	}
 
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-		
 		
 		if (!registry.isBeanNameInUse(this.getClass().getName())) {
 			registry.registerBeanDefinition(this.getClass().getName(),
@@ -62,54 +60,38 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 						.setRole(BeanDefinition.ROLE_INFRASTRUCTURE).getBeanDefinition());
 		}
 		
-		
+		//find container annotations
 		MultiValueMap<String, Object> attributesCont = importingClassMetadata
 				.getAllAnnotationAttributes(
 						ConjurPropertySources.class.getName(), false);
 		
-
+		//find simple annotations
 		MultiValueMap<String, Object> attributes = importingClassMetadata
 				.getAllAnnotationAttributes(
 						ConjurPropertySource.class.getName(), false);
 		
-		
-		//TODO: make this work
+		//resolve repeatable / container annotations
 		if (attributesCont != null)
-			for (Class<?> type : collectClasses(attributesCont.get("value"))) {
-				if (!registry.containsBeanDefinition(type.getName())) {
-					registerBeanDefinition(registry, type, type.getName(), "");
+			for (Object attribs : attributesCont.get("value")) {
+				for (AnnotationAttributes a : ((AnnotationAttributes[])attribs)) {
+					makeAndRegisterBean(registry, (String[])a.get("value"));
 				}
 			}
 		
+		//resolve single annotations
 		if (attributes != null)
-			
 			for (Object valuesObj : attributes.get("value")) {
-				
-				String[] values = (String[])valuesObj;
-				
-				for (String value : values) {
-					if (!registry.containsBeanDefinition(com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value)) {
-						registerBeanDefinition(registry, com.cyberark.sbtest.core.env.ConjurPropertySource.class,
-								com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value, value);
-					}
-				}
+				makeAndRegisterBean(registry, (String[])valuesObj);
 			}		
-		
-		
 	}
-	
-	
-	
-	private List<Class<?>> collectClasses(List<Object> list) {
-		ArrayList<Class<?>> result = new ArrayList<Class<?>>();
-		for (Object object : list) {
-			for (Object value : (Object[]) object) {
-				if (value instanceof Class && value != void.class) {
-					result.add((Class<?>) value);
-				}
+
+	private void makeAndRegisterBean(BeanDefinitionRegistry registry, String[] values) {
+		for (String value : values) {
+			if (!registry.containsBeanDefinition(com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value)) {
+				registerBeanDefinition(registry, com.cyberark.sbtest.core.env.ConjurPropertySource.class,
+						com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value, value);
 			}
 		}
-		return result;
 	}
 	
 	private void registerBeanDefinition(BeanDefinitionRegistry registry,
