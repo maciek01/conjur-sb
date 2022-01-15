@@ -2,7 +2,7 @@ package com.cyberark.sbtest.core.env;
 
 import org.springframework.core.env.EnumerablePropertySource;
 
-public class ConjurPropertySource extends EnumerablePropertySource {
+public class ConjurPropertySource extends EnumerablePropertySource<Object> {
 
 	protected ConjurPropertySource(String name) {
 		super(name);
