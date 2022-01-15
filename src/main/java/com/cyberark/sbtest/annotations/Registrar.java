@@ -74,31 +74,33 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 		if (attributesCont != null)
 			for (Object attribs : attributesCont.get("value")) {
 				for (AnnotationAttributes a : ((AnnotationAttributes[])attribs)) {
-					makeAndRegisterBean(registry, (String[])a.get("value"));
+					makeAndRegisterBean(registry, (String[])a.get("value"), a.getString("name"));
 				}
 			}
 		
 		//resolve single annotations
 		if (attributes != null)
 			for (Object valuesObj : attributes.get("value")) {
-				makeAndRegisterBean(registry, (String[])valuesObj);
+				makeAndRegisterBean(registry, (String[])valuesObj,
+					attributes.get("name").size() != 0 ? (String)attributes.get("name").get(0) : "");
 			}		
 	}
 
-	private void makeAndRegisterBean(BeanDefinitionRegistry registry, String[] values) {
+	private void makeAndRegisterBean(BeanDefinitionRegistry registry, String[] values, String name) {
 		for (String value : values) {
-			if (!registry.containsBeanDefinition(com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value)) {
+			if (!registry.containsBeanDefinition(com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value+"@"+name)) {
 				registerBeanDefinition(registry, com.cyberark.sbtest.core.env.ConjurPropertySource.class,
-						com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value, value);
+						com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value+"@"+name, value, name);
 			}
 		}
 	}
 	
 	private void registerBeanDefinition(BeanDefinitionRegistry registry,
-			Class<?> type, String name, String value) {
+			Class<?> type, String name, String value, String vaultInfo) {
 		BeanDefinitionBuilder builder = BeanDefinitionBuilder
 				.genericBeanDefinition(type);
 		builder.addConstructorArgValue(value);
+		builder.addConstructorArgValue(vaultInfo);
 		AbstractBeanDefinition beanDefinition = builder.getBeanDefinition();
 		registry.registerBeanDefinition(name, beanDefinition);
 
