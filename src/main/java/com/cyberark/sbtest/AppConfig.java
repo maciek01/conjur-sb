@@ -17,7 +17,7 @@ import com.cyberark.sbtest.annotations.ConjurPropertySource;
 import javax.sql.DataSource;
 
 @Configuration
-@ConjurPropertySource("blahblah")
+@ConjurPropertySource("myorg/myapp")
 public class AppConfig {
 	
 	
