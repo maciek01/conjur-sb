@@ -1,8 +1,11 @@
 package com.cyberark.sbtest.core.env;
 
-import org.springframework.core.env.EnumerablePropertySource;
+import org.springframework.core.env.PropertySource;
 
-public class ConjurPropertySource extends EnumerablePropertySource<Object> {
+public class ConjurPropertySource
+extends PropertySource<Object> {
+//consider the following alternative if miss rates are excessive
+//extends EnumerablePropertySource<Object> {
 	
 	private String vaultInfo = "";
 	
@@ -20,10 +23,10 @@ public class ConjurPropertySource extends EnumerablePropertySource<Object> {
 		this.vaultInfo = vaultInfo;
 	}
 
-	@Override
-	public String[] getPropertyNames() {
-		return new String[0];
-	}
+//	@Override
+//	public String[] getPropertyNames() {
+//		return new String[0];
+//	}
 
 	@Override
 	public Object getProperty(String name) {
