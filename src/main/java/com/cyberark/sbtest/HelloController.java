@@ -26,6 +26,15 @@ public class HelloController {
 			this.right = right2;
 			this.answer = long1;
 		}
+		public int getLeft() {
+			return left;
+		}
+		public int getRight() {
+			return right;
+		}
+		public long getAnswer() {
+			return answer;
+		}
 		private final int left;
         private final int right;
         private final long answer;
