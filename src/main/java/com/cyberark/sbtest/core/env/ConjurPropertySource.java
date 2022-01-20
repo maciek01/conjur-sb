@@ -31,6 +31,8 @@ extends PropertySource<Object> {
 	@Override
 	public Object getProperty(String name) {
 		
+		name = ConjurConfig.getInstance().mapProperty(name);
+		
 		System.out.printf("Resolving %s in context of %s@%s\n", name, vaultPath, vaultInfo);
 		
 		if ("database.uid".equals(name)) {
@@ -39,6 +41,14 @@ extends PropertySource<Object> {
 		
 		if ("database.password".equals(name)) {
 			return "my password";
+		}
+		
+		if ("MyConjurOracleId".equals(name)) {
+			return "my conjur oracle id";
+		}
+		
+		if ("MyConjurOraclePwd".equals(name)) {
+			return "my conjur oracle password";
 		}
 		
 		return null;
