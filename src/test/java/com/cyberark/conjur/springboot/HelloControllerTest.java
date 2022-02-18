@@ -1,4 +1,4 @@
-package com.cyberark.sbtest;
+package com.cyberark.conjur.springboot;
 
 import com.cyberark.conjur.springboot.App;
 import com.jayway.restassured.RestAssured;
