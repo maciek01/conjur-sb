@@ -1,4 +1,4 @@
-package com.cyberark.sbtest;
+package com.cyberark.conjur.springboot;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.cyberark.sbtest.annotations;
+package com.cyberark.conjur.springboot.annotations;
 
 import java.util.Collection;
 
@@ -39,7 +39,7 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 		ConfigurableEnvironment env = beanFactory.getBean(ConfigurableEnvironment.class);
 		MutablePropertySources propertySources = env.getPropertySources();
 		
-		Collection<com.cyberark.sbtest.core.env.ConjurPropertySource> beans = beanFactory.getBeansOfType(com.cyberark.sbtest.core.env.ConjurPropertySource.class).values();
+		Collection<com.cyberark.conjur.springboot.core.env.ConjurPropertySource> beans = beanFactory.getBeansOfType(com.cyberark.conjur.springboot.core.env.ConjurPropertySource.class).values();
 		
 		for (PropertySource<?> ps : beans) {
 
@@ -88,9 +88,9 @@ public class Registrar implements ImportBeanDefinitionRegistrar, BeanFactoryPost
 
 	private void makeAndRegisterBean(BeanDefinitionRegistry registry, String[] values, String name) {
 		for (String value : values) {
-			if (!registry.containsBeanDefinition(com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value+"@"+name)) {
-				registerBeanDefinition(registry, com.cyberark.sbtest.core.env.ConjurPropertySource.class,
-						com.cyberark.sbtest.core.env.ConjurPropertySource.class.getName()+"-"+value+"@"+name, value, name);
+			if (!registry.containsBeanDefinition(com.cyberark.conjur.springboot.core.env.ConjurPropertySource.class.getName()+"-"+value+"@"+name)) {
+				registerBeanDefinition(registry, com.cyberark.conjur.springboot.core.env.ConjurPropertySource.class,
+						com.cyberark.conjur.springboot.core.env.ConjurPropertySource.class.getName()+"-"+value+"@"+name, value, name);
 			}
 		}
 	}

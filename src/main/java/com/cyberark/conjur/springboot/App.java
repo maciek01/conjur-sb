@@ -1,4 +1,4 @@
-package com.cyberark.sbtest;
+package com.cyberark.conjur.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

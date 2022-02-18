@@ -1,4 +1,4 @@
-package com.cyberark.sbtest.core.env;
+package com.cyberark.conjur.springboot.core.env;
 
 import java.lang.reflect.Field;
 import java.util.Collections;

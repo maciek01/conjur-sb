@@ -1,4 +1,4 @@
-package com.cyberark.sbtest;
+package com.cyberark.conjur.springboot;
 
 import javax.sql.DataSource;
 
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 
-import com.cyberark.sbtest.annotations.ConjurPropertySource;
+import com.cyberark.conjur.springboot.annotations.ConjurPropertySource;
 
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 

@@ -1,4 +1,4 @@
-package com.cyberark.sbtest.core.env;
+package com.cyberark.conjur.springboot.core.env;
 
 import java.io.IOException;
 import java.io.InputStream;

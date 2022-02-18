@@ -1,5 +1,6 @@
 package com.cyberark.sbtest;
 
+import com.cyberark.conjur.springboot.App;
 import com.jayway.restassured.RestAssured;
 import org.junit.Before;
 import org.junit.Test;
