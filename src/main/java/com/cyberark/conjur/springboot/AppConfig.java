@@ -18,7 +18,7 @@ import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
 
 @Configuration
 @ConjurPropertySource("/myorg1/myapp1")
-@ConjurPropertySource(value={"/myorg2/myapp2", "/myorg3/myapp3"}, name="vault2")
+@ConjurPropertySource(value={"/myorg2/myapp2", "/myorg3/myapp3"}, name="vault2")//multi vault support to be added later
 public class AppConfig {
 	
     public class TestBean {

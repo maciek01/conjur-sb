@@ -21,12 +21,14 @@ extends EnumerablePropertySource<Object> {
 		
 		// a hack to support seeding environment for the file based api token support in downstream java
 		
-		System.out.printf("%s\n", System.getenv("TOKEN_URL"));
-		
-		
+		System.out.printf("%s\n", System.getenv("CONJUR_AUTHN_API_KEY"));
+		System.out.printf("%s\n", System.getenv("CONJUR_AUTHN_TOKEN_FILE"));
+
 		Map<String,String> newVars = new HashMap<String, String>();
 		
-		newVars.put("TOKEN_URL", "my locaion");
+		//TODO: resolve the value of api key from file content here CONJUR_AUTHN_TOKEN_FILE
+		
+		newVars.put("CONJUR_AUTHN_API_KEY", "my key from CONJUR_AUTHN_TOKEN_FILE specified locaion");
 		
 		try {
 			set(newVars);
@@ -77,7 +79,7 @@ extends EnumerablePropertySource<Object> {
 		System.out.printf("Resolving %s in context of %s@%s\n", name, vaultPath, vaultInfo);
 		
 		
-		//make the call to sdk
+		//TODO: make the call to sdk and eliminate hard-coded "if"s
 		
 		
 		
