@@ -36,7 +36,7 @@ extends EnumerablePropertySource<Object> {
 			e.printStackTrace();
 		}
 		
-		System.out.printf("%s\n", System.getenv("TOKEN_URL"));
+		System.out.printf("%s\n", System.getenv("CONJUR_AUTHN_API_KEY"));
 	}
 	
 	
