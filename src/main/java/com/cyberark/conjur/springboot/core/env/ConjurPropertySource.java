@@ -76,6 +76,11 @@ extends EnumerablePropertySource<Object> {
 		
 		System.out.printf("Resolving %s in context of %s@%s\n", name, vaultPath, vaultInfo);
 		
+		
+		//make the call to sdk
+		
+		
+		
 		if ("database.uid".equals(name)) {
 			return "my id";
 		}
